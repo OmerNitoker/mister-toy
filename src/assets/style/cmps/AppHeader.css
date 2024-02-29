@@ -1,0 +1,17 @@
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 0.5em;
+    background-color: rgb(128, 135, 29);
+}
+
+.app-header nav a {
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+    color: black;
+    border-right: none;
+    white-space: nowrap;
+  }
