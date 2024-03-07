@@ -1,0 +1,15 @@
+
+.toy-list {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.toy-list li {
+    background-color: rgb(172, 172, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    margin: 0.5em;
+    padding-inline: 0.5em;
+
+}

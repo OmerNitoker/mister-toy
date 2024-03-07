@@ -32,8 +32,8 @@ export function toyReducer(state = initialState, action = {}) {
     // let shoppingCart
     let lastToys
     switch (action.type) {
-        // Cars
-        case SET_TOYS:
+        // Toys
+        case SET_TOYS:   
             lastToys = [...action.toys]
             return { ...state, toys: action.toys, lastToys }
 

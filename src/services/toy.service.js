@@ -50,8 +50,9 @@ function save(toy) {
 function getNewToy() {
     const toys = ['Teddy Bear', 'Barbie Doll', 'LEGO', 'Hot Wheels', 'Play-Doh', 'Rubiks Cube', 'Transformers', 'My Little Pony', 'Monopoly', 'Yo-yo', 'Mr. Potato Head']
     return {
-        name: toys[utilService.getRandomIntInclusive(0,toys.length-1)] + (Date.now() % 1000),
+        name: toys[utilService.getRandomIntInclusive(0,toys.length-1)] + ' ' + (Date.now() % 1000),
         price: utilService.getRandomIntInclusive(10, 900),
+        // createdAt: Date.now()        
         // speed: utilService.getRandomIntInclusive(50, 200),
     }
 }
