@@ -74,7 +74,7 @@ export function ToyIndex() {
     }
 
     return (
-        <div>
+        <div className='main-container'>
             <h2>Our Toys:</h2>
             <main>
                 <button onClick={onAddToy}>Add Toy</button>

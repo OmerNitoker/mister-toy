@@ -1,6 +1,11 @@
+.main-layout {
+  margin: 0 auto;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+}
 
 footer {
-    background-color: rgb(128, 135, 29);
-    padding: 0.5em;
+  background-color: rgb(128, 135, 29);
+  padding: 0.5em;
   text-align: center;
 }
