@@ -6,7 +6,10 @@ export const utilService = {
     saveToStorage,
     animateCSS,
     debounce,
-    getAssetSrc
+    getAssetSrc,
+    makeToyName,
+    makeLabels,
+    getTimeFromStamp
 }
 
 function makeId(length = 6) {
@@ -80,4 +83,63 @@ function getAssetSrc(name) {
     const modules = import.meta.globEager('/src/assets/img/*')
     const mod = modules[path]
     return mod.default
+}
+
+function makeToyName() {
+    const names = ['Teddy Bear', 'Barbie Doll', 'LEGO', 'Hot Wheels', 'Play-Doh', 'Rubiks Cube', 'Transformers', 'My Little Pony', 'Monopoly', 'Yo-yo', 'Mr. Potato Head']
+    return names[getRandomIntInclusive(0, names.length - 1)] + ' ' + (Date.now() % 1000)
+}
+
+function makeLabels(size = 3) {
+    var words = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
+    var word = ''
+    let labels = []
+    while (size > 0) {
+        size--
+        word = words[Math.floor(Math.random() * words.length)] + ''
+        labels.push(word)
+    }
+    return labels
+}
+
+function getTimeFromStamp(timestamp) {
+    const days = [
+        'Sunday',
+        'Monday',
+        'Tuesday',
+        'Wednesday',
+        'Thursday',
+        'Friday',
+        'Saturday',
+    ]
+    const months = [
+        'January',
+        'February',
+        'March',
+        'April',
+        'May',
+        'June',
+        'July',
+        'August',
+        'September',
+        'October',
+        'November',
+        'December',
+    ]
+    const date = new Date(timestamp)
+    const time =
+        timeFormat(date.getHours()) + ':' + timeFormat(date.getMinutes())
+    const currTimestamp = Date.now()
+    const currDate = new Date(currTimestamp)
+    const day = 1000 * 60 * 60 * 24
+    if (currTimestamp - timestamp < day) return 'Today ' + time
+    if (currTimestamp - timestamp < day * 2) return 'Yesterday ' + time
+    if (currTimestamp - timestamp < day * 7) return days[date.getDay()]
+    if (currDate.getUTCFullYear() !== date.getUTCFullYear())
+        return months[date.getMonth()].slice(0, 3) + ' ' + date.getUTCFullYear()
+    return date.getDate() + ' ' + months[date.getMonth()].slice(0, 3)
+}
+
+function timeFormat(time) {
+    return time < 10 ? '0' + time : time
 }

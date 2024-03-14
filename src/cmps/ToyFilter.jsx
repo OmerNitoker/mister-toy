@@ -3,10 +3,11 @@ import { useEffect, useRef, useState } from "react"
 import { toyService } from "../services/toy.service.js"
 import { utilService } from "../services/util.service.js"
 
+const toyLabels = toyService.getLabels()
 
 export function ToyFilter({ filterBy, onSetFilter }) {
 
-    const [filterByToEdit, setFilterByToEdit] = useState({...filterBy})
+    const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
 
     onSetFilter = useRef(utilService.debounce(onSetFilter))
 
@@ -17,35 +18,48 @@ export function ToyFilter({ filterBy, onSetFilter }) {
 
     function handleChange({ target }) {
         let { value, name: field, type } = target
-        value = (type === 'number') ? (+value || '') : value
+        if (field === 'inStock' && value === '') value = ''
+        else if (type === 'select-one') value = value === 'true'
+        else if (type === 'number') value = +value
+        else if (type === 'select-multiple') value = Array.from(target.selectedOptions, (option) => option.value) 
+       
         setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
     }
 
-
     return (
-        <section className="toy-filter full main-layout">
+        <section className="toy-filter main-layout">
             <h2>Toys Filter</h2>
             <form >
-                <label htmlFor="name">Name:</label>
-                <input type="text"
-                    id="name"
-                    name="txt"
-                    placeholder="By name"
-                    value={filterByToEdit.txt}
-                    onChange={handleChange}
-                />
-
-                <label htmlFor="maxPrice">Max price:</label>
-                <input type="number"
-                    id="maxPrice"
-                    name="maxPrice"
-                    placeholder="By max price"
-                    value={filterByToEdit.maxPrice}
-                    onChange={handleChange}
-                />
-
+                <div>
+                    <label htmlFor="txt">Name:</label>
+                    <input type="txt"
+                        id="txt"
+                        name="txt"
+                        placeholder="By name"
+                        value={filterByToEdit.txt}
+                        onChange={handleChange}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="inStock">Show:</label>
+                    <select name="inStock" id="inStock" value={filterByToEdit.inStock} onChange={handleChange}>
+                        <option value="">All</option>
+                        <option value="true">In Stock</option>
+                        <option value="false">Out of Stock</option>
+                    </select>
+                </div>
+                <div>
+                    <label htmlFor="labels">Labels:</label>
+                    <select multiple name="labels" id="labels" onChange={handleChange}>
+                        <option value="">All</option>
+                        <>
+                            {toyLabels.map(label => (
+                                <option key={label} value={label}>{label}</option>
+                            ))}
+                        </>
+                    </select>
+                </div>
             </form>
-
         </section>
     )
 }

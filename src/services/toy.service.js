@@ -1,11 +1,12 @@
 
-import { storageService } from './async-storage.service.js'
+// import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 // import { userService } from './user.service.js'
 import { httpService } from './http.service.js'
 
 const BASE_URL = 'toy/'
 const STORAGE_KEY = 'toyDB'
+const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered']
 
 export const toyService = {
     query,
@@ -13,7 +14,8 @@ export const toyService = {
     save,
     remove,
     getNewToy,
-    getDefaultFilter
+    getDefaultFilter,
+    getLabels
 }
 
 function query(filterBy = {}) {
@@ -38,18 +40,22 @@ function save(toy) {
 }
 
 function getNewToy() {
-    const toys = ['Teddy Bear', 'Barbie Doll', 'LEGO', 'Hot Wheels', 'Play-Doh', 'Rubiks Cube', 'Transformers', 'My Little Pony', 'Monopoly', 'Yo-yo', 'Mr. Potato Head']
     return {
-        name: toys[utilService.getRandomIntInclusive(0,toys.length-1)] + ' ' + (Date.now() % 1000),
+        name: utilService.makeToyName(),
         price: utilService.getRandomIntInclusive(10, 900),
-        // createdAt: Date.now()        
-        // speed: utilService.getRandomIntInclusive(50, 200),
+        labels: utilService.makeLabels(),
+        createdAt: utilService.getTimeFromStamp(Date.now()),
+        inStock: Math.random() > 0.3 ? true : false
     }
 }
 
 
 function getDefaultFilter() {
-    return { txt: '', maxPrice: '' }
+    return { txt: '', labels: [], inStock: undefined }
+}
+
+function getLabels() {
+    return labels
 }
 
 // TEST DATA
